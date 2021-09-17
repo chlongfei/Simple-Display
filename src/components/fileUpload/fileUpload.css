@@ -1,0 +1,4 @@
+#upload input[type=file]{
+    text-align: center !important;
+    height: 200px;
+}
