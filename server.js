@@ -6,51 +6,45 @@ const path = require('path');
 var app = express();
 app.use(cors());
 
-var storage_htm = multer.diskStorage({
+var storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, 'public/uploads');
     },
     filename: function (req, file, cb){
-        cb(null,file.originalname);
+        cb(null,"active" + path.extname(file.originalname));
     }
 })
 
-var storage_af = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, 'public/uploads/active_files');
-    },
-    filename: function (req, file, cb){
-        cb(null,file.originalname);
-    }
+var upload = multer({storage: storage}).single('file');
+
+app.post('/upload', function (req, res){
+    require('child_process').exec('cmd /c ' + __dirname +'/scripts/clearUploads.bat', ()=>{
+        upload(req, res, function (err){
+            if(err instanceof multer.MulterError){
+                return res.status(500).json(err);
+            }else if(err){
+                return res.status(500).json(err);
+            }
+            require('child_process').exec('cmd /c ' + __dirname + '/scripts/runCreateHtm.bat',()=>{
+                return res.status(200).send(req.file);
+            });
+        })
+    });
 })
 
-var upload_htm = multer({storage: storage_htm}).single('file');
-var upload_af = multer({storage: storage_af}).single('file');
-
-app.post('/upload/htm', function (req, res){
-    upload_htm(req, res, function (err){
-        if(err instanceof multer.MulterError){
-            return res.status(500).json(err);
-        }else if(err){
-            return res.status(500).json(err);
-        }
-        return res.status(200).send(req.file);
-    })
+app.get("", function (req, res){
+    res.sendFile(path.join(__dirname, '/public/uploads/active.html'));
 })
 
-app.post('/upload/af', function (req, res){
-    upload_af(req, res, function (err){
-        if(err instanceof multer.MulterError){
-            return res.status(500).json(err);
-        }else if(err){
-            return res.status(500).json(err);
-        }
-        return res.status(200).send(req.file);
-    })
+
+app.get("/active_files/*", function (req, res){
+    res.sendFile(path.join(__dirname, '/public/uploads/'+ req.url));
+    console.log(req.url);
 })
 
-app.get("/view", function (req, res){
-    res.sendFile(path.join(__dirname, '/public/uploads/active.htm'));
+app.get("/manage", function (req, res){
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    console.log(req.url);
 })
 
 app.listen(8000, function(){
