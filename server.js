@@ -1,3 +1,5 @@
+const PORT = 8000;
+
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
@@ -5,6 +7,7 @@ const path = require('path');
 
 var app = express();
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'build')));
 
 var storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -32,7 +35,7 @@ app.post('/upload', function (req, res){
     });
 })
 
-app.get("", function (req, res){
+app.get("/show", function (req, res){
     res.sendFile(path.join(__dirname, '/public/uploads/active.html'));
 })
 
@@ -42,11 +45,10 @@ app.get("/active_files/*", function (req, res){
     console.log(req.url);
 })
 
-app.get("/manage", function (req, res){
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-    console.log(req.url);
-})
+app.get('/', function (req, res){
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
-app.listen(8000, function(){
-    console.log('App running at port 8000');
-})
+app.listen(process.env.PORT || 8080, ()=>{
+    console.log("server is running");
+});

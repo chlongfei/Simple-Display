@@ -2,3 +2,18 @@
     text-align: center !important;
     height: 200px;
 }
+
+#uploadComplete{
+    display: none;
+    margin: 5% 0;
+    background-color: greenyellow;
+    font-weight: bolder;
+    font-size: large;
+}
+
+#loadingBar{
+    display: none;
+    background-color: lightblue;
+    font-weight: bolder;
+    font-size: large;
+}

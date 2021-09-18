@@ -6,6 +6,7 @@ import React, {useState} from 'react';
 
 export default function FileUpload(){
     const [file, setFile] = useState(null);
+    const [uploading, setBtn] = useState(false);
 
 
     function onChangeHandler(e){
@@ -16,23 +17,35 @@ export default function FileUpload(){
         const data = new FormData();
         data.append('file', file);
         console.log("uploading...");
+        setBtn(true);
+        document.getElementById("loadingBar").style.display = "block";
         axios.post(url, data, {})
         .then(res => {
-            //console.log(res.statusText);
+            console.log(res);
+            document.getElementById("uploadBtn").style.display = "none";
+            document.getElementById("loadingBar").style.display = "none";
+            document.getElementById("uploadForm").style.display = "none";
+            document.getElementById("uploadComplete").style.display = "block";
+
         })
     }
 
     return(
         <div id="upload" className="container">
-                <form method="post" action="#" id="#">
+            <h2>Upload Excel (.xlsx) file </h2>
+                <form method="post" action="#" id="uploadForm">
                     <div class="form-group files color">
-                        <h2>Upload Excel (.xlsx) file </h2>
                         <br/>
                         <input type="file" name="file" className="form-control" accept=".xlsx" onChange={(e)=>{onChangeHandler(e)}}/>
                         <br/>
-                        <input type="button" className="btn btn-success btn-block" value="Upload" onClick={(e)=>{onClickHandler(e, "http://localhost:8000/upload")}}/>
+                        <input id="uploadBtn" type="button" className="btn btn-success btn-block" value="Upload" disabled={uploading} onClick={(e)=>{onClickHandler(e, process.env.PUBLIC_URL + "/upload")}}/>
                     </div>                    
                 </form>
+            <div id="loadingBar">Uploading file...</div>
+            <div id="uploadComplete">
+                Upload Complete! - You may close this window.<br/>
+                (<a href={process.env.PUBLIC_URL+"/show"}>Preview</a>)
+                </div>
         </div>
     )
 }
