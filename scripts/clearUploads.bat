@@ -1,4 +1,4 @@
 @ echo off
 
-cd public/uploads
+cd build/uploads
 echo y | del *.*

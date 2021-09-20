@@ -1,5 +1,5 @@
 @echo off
 
-cd public/uploads
+cd build/uploads
 robocopy "../../scripts" "./" createHtm.vbs
 cscript createHtm.vbs

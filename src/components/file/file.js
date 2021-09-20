@@ -4,6 +4,7 @@ import './file.css';
 export default function FileUploader(){
     const [file, setFile] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [done, setDone] = useState(false);
     const [error, setError] = useState(false);
     const [statMsg, setStatMsg] = useState("");
 
@@ -41,7 +42,7 @@ export default function FileUploader(){
         }else{
             setStatMsg(e.loaded + " of " + e.total + " bytes uploaded...");
             if(e.type === 'loadend' && !error){
-                setUploading("DONE");
+                setDone(true)
                 setStatMsg("DONE! ( " + e.loaded + " bytes uploaded)");
             }
         }
@@ -54,9 +55,15 @@ export default function FileUploader(){
     function ConditionalForm(){
         if(!uploading){
             return <></>
-        }else if (uploading && !error){
+        }else if (uploading && !done && !error){
             return(
                 <div id="uploading">
+                    <h4>{statMsg}</h4>
+                </div>
+            )
+        }else if (uploading && done && !error){
+            return(
+                <div id="done">
                     <h4>{statMsg}</h4>
                     <button className="btn btn-secondary reload" onClick={()=>{window.location.reload()}}>update preview -></button>
                 </div>
