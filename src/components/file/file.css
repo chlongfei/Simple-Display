@@ -1,0 +1,19 @@
+#fileUploader input[type=file]{
+    width: 100%;
+    padding: 5%;
+    margin-bottom: 5px;
+    border: solid thin lightgray;
+    border-radius: 5px;
+}
+#fileUploader #uploading{
+    padding: 5px;
+    background-color:lightgreen;
+}
+#fileUploader #uploadError{
+    padding: 5px;
+    background-color: maroon;
+    color: white;
+}
+#fileUploader .reload{
+    width: 100%;
+}

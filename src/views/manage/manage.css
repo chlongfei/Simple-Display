@@ -1,0 +1,9 @@
+#manage header{
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: lightblue;
+    font-weight: bolder;
+}
+#manage .row{
+    height: 100%;
+}
