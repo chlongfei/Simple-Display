@@ -8,10 +8,12 @@
 #fileUploader #uploading{
     padding: 5px;
     background-color:lightgoldenrodyellow;
+    color: black;
 }
 #fileUploader #done{
     padding: 5px;
     background-color:lightgreen;
+    color: black;
 }
 #fileUploader #uploadError{
     padding: 5px;

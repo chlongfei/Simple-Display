@@ -24,7 +24,7 @@ export default function FileUploader(){
 
         var xmlHttp = new XMLHttpRequest();
         httpEventListener(xmlHttp);
-        xmlHttp.open('POST', '/upload', true);
+        xmlHttp.open('POST', '/api/upload', true);
         xmlHttp.onloadend = ()=>{
             if(xmlHttp.status !== 200){
                 setError(true);

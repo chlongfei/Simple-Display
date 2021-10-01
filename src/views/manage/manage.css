@@ -1,9 +1,17 @@
+#manage{
+    background-color: #262626;
+    height: 100vh;
+    color: white;
+}
 #manage header{
     padding: 5px;
     margin-bottom: 10px;
-    background-color: lightblue;
+    background-color: #074668;
     font-weight: bolder;
 }
 #manage .row{
     height: 100%;
+}
+#manage .btn{
+    width: 100%;
 }

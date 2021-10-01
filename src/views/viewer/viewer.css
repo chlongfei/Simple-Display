@@ -1,5 +1,11 @@
 #viewerFrame{
-    height: 99vh;
+    height: 100%;
     width: 100%;
     border: none;
+}
+#viewer{
+    height: 100vh;
+}
+#socketConnection{
+    z-index: 100;
 }
