@@ -99,5 +99,9 @@ app.use((req, res, next)=>{
 
 //starts js http server
 server.listen(port, ()=>{
-    console.log("Server is running at " + port + "!");
+    console.log("**********************************************")
+    console.log("Server is now listening on port " + port + "!");
+    console.log("Created by LongFei Chen - October 1, 2021")
+    console.log("**********************************************")
+    console.log("------- console logs below this point --------")
 })
