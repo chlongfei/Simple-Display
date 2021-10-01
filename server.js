@@ -29,7 +29,6 @@ var upload = multer({
 //on http POST - handle upload file
 app.post('/upload', (req, res)=>{
     require('child_process').exec('cmd /c "' + __dirname + '/scripts/clearUploads.bat"',()=>{
-        console.log(__dirname);
         upload(req, res, (err)=>{
             if(err instanceof multer.MulterError){
                 return res.status(500).json(err);

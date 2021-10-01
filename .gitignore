@@ -23,6 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # public upload folder
-public/uploads
+public/uploads/*
 
 package-lock.json

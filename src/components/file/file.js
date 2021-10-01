@@ -8,7 +8,16 @@ export default function FileUploader(){
     const [error, setError] = useState(false);
     const [statMsg, setStatMsg] = useState("");
 
+    function reset(){
+        setFile(null);
+        setUploading(false);
+        setDone(false);
+        setError(false);
+        setStatMsg("");
+    }
+
     function handleSendFile(){
+        reset();
         setUploading(true);
         const data = new FormData();
         data.append('file', file);
@@ -40,7 +49,7 @@ export default function FileUploader(){
             setError(true);
             setStatMsg("ERROR! " + e.loaded + " of " + e.total + " bytes uploaded");
         }else{
-            setStatMsg(e.loaded + " of " + e.total + " bytes uploaded...");
+            setStatMsg("Uploading... please wait.");
             if(e.type === 'loadend' && !error){
                 setDone(true)
                 setStatMsg("DONE! ( " + e.loaded + " bytes uploaded)");
