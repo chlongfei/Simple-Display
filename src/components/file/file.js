@@ -74,7 +74,6 @@ export default function FileUploader(){
             return(
                 <div id="done">
                     <h4>{statMsg}</h4>
-                    <button className="btn btn-secondary reload" onClick={()=>{window.location.reload()}}>update preview -></button>
                 </div>
             )
         }else{
@@ -89,10 +88,10 @@ export default function FileUploader(){
 
     return(
         <div id="fileUploader">
-            <h5>Upload Microsoft Excel file below:</h5>
+            <h5>Upload Microsoft Excel or PDF file below:</h5>
             <div>
                 <form>
-                    <input id="formFileUpload" type="file" accept=".xlsx" onChange={(e)=>{setFile(e.target.files[0])}}/>
+                    <input id="formFileUpload" type="file" accept=".xlsx, .pdf" onChange={(e)=>{setFile(e.target.files[0])}}/>
                     <br/>
                     <input id="uploadBtn" className="btn btn-success btn-block" type="button" value="Upload" disabled={!fileValid()} onClick={(e)=>{handleSendFile(e)}}/>
                 </form>

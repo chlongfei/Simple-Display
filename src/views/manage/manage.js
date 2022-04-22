@@ -26,6 +26,7 @@ export default function Manage(){
                     </Col>
                     <Col>
                         <Preview/>
+                        <sub>If display does not show content, re-upload file</sub>
                     </Col>
                 </Row>
             </Container>

@@ -3,6 +3,7 @@ parent = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.
 
 ' Create an instance of Excel and open the workbook...
 Set objExcel = CreateObject("Excel.Application")
+objExcel.DefaultWebOptions.RelyOnCSS = True
 objExcel.Workbooks.Open parent & "/active.xlsx"
 
 ' Save the workbook as an HTML or MHTML page...

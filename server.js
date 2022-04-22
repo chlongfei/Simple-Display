@@ -1,5 +1,5 @@
 //parameters
-const port = 8000;
+var port = 8000;
 
 //libraries
 const express = require('express');
@@ -15,6 +15,7 @@ const server = http.createServer(app);
 
 //socket io
 const socket = require("socket.io");
+const { argv } = require('process');
 const io = socket(server);
 io.on('connection', (socket)=>{
     var ip = socket.handshake.address;
@@ -50,13 +51,17 @@ app.post('/api/upload', (req, res)=>{
             }else if(err){
                 return res.status(500).json(err);
             }else{
-                require('child_process').exec('cmd /c "' + __dirname + '/scripts/runCreateHtm.bat"', ()=>{
-                    console.log(req.file.originalname + " has been succesfully uploaded");
-                    console.log("reloading clients");
-                    io.sockets.emit("reload", "everyone");
+                if(req.file.originalname.split(".")[1] === "pdf"){
+                    io.sockets.emit("pdf", "everyone");
                     return res.status(200).send(req.file);
-                
-                });
+                }else{
+                    require('child_process').exec('cmd /c "' + __dirname + '/scripts/runCreateHtm.bat"', ()=>{
+                        console.log(req.file.originalname + " has been succesfully uploaded");
+                        console.log("reloading clients");
+                        io.sockets.emit("xls", "everyone");
+                        return res.status(200).send(req.file);                    
+                    });
+                }
             }
         });
     });
@@ -75,6 +80,17 @@ app.get('/active_files/*', (req, res)=>{
 //on http GET - send supporting files for htm
 app.get('/res/*', (req, res)=>{
     res.sendFile(path.join(__dirname, '/build/res/' + req.url));
+    console.log(req.url);
+})
+//on http GET - send active.html
+app.get('/active.html', (req, res)=>{
+    res.status(200).sendFile(path.join(__dirname, '/build/uploads/' + req.url));
+    console.log(req.url);
+})
+
+//on http GET - send active.html
+app.get('/active.pdf', (req, res)=>{
+    res.status(200).sendFile(path.join(__dirname, '/build/uploads/' + req.url));
     console.log(req.url);
 })
 
@@ -97,11 +113,16 @@ app.use((req, res, next)=>{
     res.status(404).sendFile(path.join(__dirname, 'build/404.html'))
 })
 
+//if commandline port specified
+if(argv.length > 2){
+    port = argv[2];
+}
+
+
 //starts js http server
 server.listen(port, ()=>{
     console.log("**********************************************")
     console.log("Server is now listening on port " + port + "!");
-    console.log("Created by LongFei Chen - October 1, 2021")
     console.log("**********************************************")
     console.log("------- console logs below this point --------")
 })
