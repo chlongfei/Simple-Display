@@ -3,6 +3,10 @@ parent = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.
 
 ' Create an instance of Excel and open the workbook...
 Set objExcel = CreateObject("Excel.Application")
+
+' Disable Alerts
+objExcel.DisplayAlerts = False
+
 objExcel.DefaultWebOptions.RelyOnCSS = True
 objExcel.Workbooks.Open parent & "/active.xlsx"
 
